@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ❌ @apply hatao, direct CSS use karo */
+body {
+  background: #020617; /* gray-950 */
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+/* scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #020617;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 10px;
+}
