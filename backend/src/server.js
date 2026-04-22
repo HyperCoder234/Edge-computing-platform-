@@ -17,7 +17,7 @@ const errorHandler = require("./middlewares/errorHandler");
 // DB
 const connectDB = require("./config/db");
 
-// ✅ MQTT
+// MQTT
 const initMQTT = require("./services/mqttService");
 
 // App init
@@ -27,8 +27,10 @@ const server = http.createServer(app);
 // ===== CONNECT DATABASE FIRST =====
 connectDB();
 
-// ===== START MQTT AFTER DB =====
-initMQTT();
+// ===== START MQTT ONLY IN LOCAL =====
+if (process.env.NODE_ENV !== "production") {
+  initMQTT();
+}
 
 // ===== GLOBAL MIDDLEWARE =====
 app.use(helmet());
