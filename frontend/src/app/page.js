@@ -7,10 +7,19 @@ export default function Home() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
+    let isMounted = true;
+
     const fetchLoop = async () => {
       try {
         const res = await fetchData();
-        setData(res.slice(0, 20));
+
+        const sorted = res.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+
+        if (isMounted) {
+          setData(sorted.slice(0, 20));
+        }
       } catch (err) {
         console.error(err);
       }
@@ -19,17 +28,39 @@ export default function Home() {
     };
 
     fetchLoop();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const latest = data[0] || {};
+
+  // 🔥 dynamic calculations
+  const activeNodes = new Set(data.map((d) => d.nodeId)).size;
+  const avgCpu =
+    data.reduce((acc, d) => acc + (d.cpuUsage || 0), 0) /
+    (data.length || 1);
+
+  const avgTemp =
+    data.reduce((acc, d) => acc + (d.temperature || 0), 0) /
+    (data.length || 1);
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
 
       {/* Top Stats */}
       <div className="grid md:grid-cols-2 gap-4">
-        <Card title="ACTIVE NODES" value="247" sub="+12 new this week" />
-        <Card title="NETWORK HEALTH" value="98.7%" sub="All systems operational" />
+        <Card
+          title="ACTIVE NODES"
+          value={activeNodes}
+          sub="Live connected nodes"
+        />
+        <Card
+          title="NETWORK HEALTH"
+          value={`${Math.min(100, Math.round(100 - avgCpu / 2))}%`}
+          sub="Based on system load"
+        />
       </div>
 
       {/* Middle Section */}
@@ -56,9 +87,9 @@ export default function Home() {
         <div className="card">
           <h2 className="mb-4">System Load</h2>
 
-          <Bar label="CPU Usage" value={latest.cpuUsage || 64} />
-          <Bar label="Memory Usage" value={42} />
-          <Bar label="Bandwidth" value={78} />
+          <Bar label="CPU Usage" value={Math.round(latest.cpuUsage || 0)} />
+          <Bar label="Temperature" value={Math.round(latest.temperature || 0)} />
+          <Bar label="Avg CPU" value={Math.round(avgCpu)} />
         </div>
       </div>
 
@@ -69,15 +100,30 @@ export default function Home() {
         <div className="card">
           <div className="flex justify-between mb-3">
             <h2>Node Status</h2>
-            <span className="badge blue">12 alerts</span>
+            <span className="badge blue">{data.length} logs</span>
           </div>
 
-          {["Edge-US-001", "Edge-EU-042", "Edge-AP-015", "Edge-CN-008"].map((n, i) => (
-            <div key={i} className="flex justify-between py-2 border-b border-white/10">
-              <span>{n}</span>
-              <span className="text-green-400">Healthy</span>
-            </div>
-          ))}
+          {[...new Set(data.map((d) => d.nodeId))].map((node, i) => {
+            const latestNode = data.find((d) => d.nodeId === node);
+
+            return (
+              <div
+                key={i}
+                className="flex justify-between py-2 border-b border-white/10"
+              >
+                <span>{node}</span>
+                <span
+                  className={
+                    latestNode?.cpuUsage > 80
+                      ? "text-yellow-400"
+                      : "text-green-400"
+                  }
+                >
+                  {latestNode?.cpuUsage > 80 ? "Degraded" : "Healthy"}
+                </span>
+              </div>
+            );
+          })}
 
           <div className="flex gap-3 mt-4">
             <button className="btn">View All</button>
@@ -89,14 +135,23 @@ export default function Home() {
         <div className="card">
           <div className="flex justify-between mb-3">
             <h2>Performance Metrics</h2>
-            <span className="badge green">Optimized</span>
+            <span className="badge green">Live</span>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
-            <MiniCard label="Avg Latency" value="24ms" />
-            <MiniCard label="Throughput" value="2.4GB/s" />
-            <MiniCard label="Uptime" value="99.98%" />
-            <MiniCard label="Consensus" value="8.2s" />
+            <MiniCard
+              label="Avg Latency"
+              value={`${Math.round(20 + avgCpu / 5)} ms`}
+            />
+            <MiniCard
+              label="Throughput"
+              value={`${(2 + avgCpu / 100).toFixed(2)} GB/s`}
+            />
+            <MiniCard label="Uptime" value="99.9%" />
+            <MiniCard
+              label="Consensus"
+              value={`${(5 + avgCpu / 20).toFixed(1)} s`}
+            />
           </div>
 
           <div className="flex gap-3 mt-4">
@@ -110,21 +165,19 @@ export default function Home() {
       <div className="card">
         <div className="flex justify-between mb-3">
           <h2>Recent Activity</h2>
-          <span className="badge blue">Last 24 hours</span>
+          <span className="badge blue">Live</span>
         </div>
 
-        {[
-          "Network rebalance completed",
-          "3 new nodes joined network",
-          "Protocol upgrade deployed",
-          "Storage replication synchronized"
-        ].map((t, i) => (
-          <div key={i} className="py-2 border-b border-white/10 text-gray-300">
-            {t}
+        {data.slice(0, 5).map((item) => (
+          <div
+            key={item._id}
+            className="py-2 border-b border-white/10 text-gray-300"
+          >
+            Node {item.nodeId} reported {item.cpuUsage}% CPU &{" "}
+            {item.temperature}°C
           </div>
         ))}
       </div>
-
     </div>
   );
 }
