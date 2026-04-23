@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { fetchData } from "../services/api";
+import Chart from "../components/Chart";
 
 export default function Home() {
   const [data, setData] = useState([]);
@@ -39,7 +40,6 @@ export default function Home() {
 
   const latest = data[0] || {};
 
-  // 🔥 dynamic values
   const activeNodes = new Set(data.map((d) => d.nodeId)).size;
 
   const avgCpu =
@@ -70,11 +70,26 @@ export default function Home() {
 
       </div>
 
+      {/* GRAPH SECTION (IMPORTANT) */}
+      <div className="grid md:grid-cols-2 gap-4">
+
+        <div className="bg-[#1a1a1a] border border-white/10 p-4 rounded-xl">
+          <h2 className="mb-2">Temperature Trend</h2>
+          <Chart data={data} dataKey="temperature" color="#3b82f6" />
+        </div>
+
+        <div className="bg-[#1a1a1a] border border-white/10 p-4 rounded-xl">
+          <h2 className="mb-2">CPU Usage Trend</h2>
+          <Chart data={data} dataKey="cpuUsage" color="#22c55e" />
+        </div>
+
+      </div>
+
       {/* SYSTEM LOAD */}
       <div className="grid md:grid-cols-2 gap-4">
 
         <div className="bg-[#1a1a1a] border border-white/10 p-5 rounded-xl">
-          <h2 className="mb-4 text-white">System Load</h2>
+          <h2 className="mb-4">System Load</h2>
 
           <Bar label="CPU Usage" value={latest.cpuUsage || 0} />
           <Bar label="Temperature" value={latest.temperature || 0} />
@@ -133,7 +148,7 @@ export default function Home() {
   );
 }
 
-/* 🔥 BAR COMPONENT */
+/* BAR COMPONENT */
 function Bar({ label, value }) {
   const safeValue = Math.round(value || 0);
 
