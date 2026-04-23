@@ -10,6 +10,7 @@ const morgan = require("morgan");
 // Route imports
 const nodeRoutes = require("./routes/nodeRoutes");
 const dataRoutes = require("./routes/dataRoutes");
+const controlRoutes = require("./routes/controlRoutes"); // ✅ NEW
 
 // Middleware imports
 const errorHandler = require("./middlewares/errorHandler");
@@ -27,7 +28,7 @@ const server = http.createServer(app);
 // ===== CONNECT DATABASE FIRST =====
 connectDB();
 
-// ===== START MQTT (CLOUD ENABLED) =====
+// ===== START MQTT =====
 initMQTT();
 
 // ===== GLOBAL MIDDLEWARE =====
@@ -52,6 +53,7 @@ app.get("/api/health", (req, res) => {
 // ===== ROUTES =====
 app.use("/api/nodes", nodeRoutes);
 app.use("/api/data", dataRoutes);
+app.use("/api/control", controlRoutes); // ✅ NEW
 
 // ===== 404 HANDLER =====
 app.use((req, res) => {
