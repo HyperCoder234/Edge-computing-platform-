@@ -52,13 +52,13 @@ export default function Home() {
       {/* TOP STATS */}
       <div className="grid md:grid-cols-2 gap-4">
 
-        <div className="bg-[#1a1a1a] border border-white/10 p-5 rounded-xl">
+        <div className="glass hover-card p-5 glow">
           <p className="text-gray-400 text-sm">ACTIVE NODES</p>
           <h2 className="text-3xl font-bold mt-2">{activeNodes}</h2>
           <p className="text-gray-500 text-sm">Live connected nodes</p>
         </div>
 
-        <div className="bg-[#1a1a1a] border border-white/10 p-5 rounded-xl">
+        <div className="glass hover-card p-5 glow">
           <p className="text-gray-400 text-sm">NETWORK HEALTH</p>
           <h2 className="text-3xl font-bold mt-2">
             {Math.min(100, Math.round(100 - avgCpu / 2))}%
@@ -70,15 +70,15 @@ export default function Home() {
 
       </div>
 
-      {/* GRAPH SECTION (IMPORTANT) */}
+      {/* GRAPHS */}
       <div className="grid md:grid-cols-2 gap-4">
 
-        <div className="bg-[#1a1a1a] border border-white/10 p-4 rounded-xl">
+        <div className="glass hover-card p-4">
           <h2 className="mb-2">Temperature Trend</h2>
           <Chart data={data} dataKey="temperature" color="#3b82f6" />
         </div>
 
-        <div className="bg-[#1a1a1a] border border-white/10 p-4 rounded-xl">
+        <div className="glass hover-card p-4">
           <h2 className="mb-2">CPU Usage Trend</h2>
           <Chart data={data} dataKey="cpuUsage" color="#22c55e" />
         </div>
@@ -88,7 +88,7 @@ export default function Home() {
       {/* SYSTEM LOAD */}
       <div className="grid md:grid-cols-2 gap-4">
 
-        <div className="bg-[#1a1a1a] border border-white/10 p-5 rounded-xl">
+        <div className="glass hover-card p-5">
           <h2 className="mb-4">System Load</h2>
 
           <Bar label="CPU Usage" value={latest.cpuUsage || 0} />
@@ -97,7 +97,7 @@ export default function Home() {
         </div>
 
         {/* NODE STATUS */}
-        <div className="bg-[#1a1a1a] border border-white/10 p-5 rounded-xl">
+        <div className="glass hover-card p-5">
           <h2 className="mb-3">Node Status</h2>
 
           {[...new Set(data.map((d) => d.nodeId))].map((node, i) => {
@@ -129,26 +129,11 @@ export default function Home() {
 
       </div>
 
-      {/* ACTIVITY */}
-      <div className="bg-[#1a1a1a] border border-white/10 p-5 rounded-xl">
-        <h2 className="mb-3">Recent Activity</h2>
-
-        {data.slice(0, 5).map((item) => (
-          <div
-            key={item._id}
-            className="py-2 border-b border-white/10 text-gray-300"
-          >
-            Node {item.nodeId} → CPU {item.cpuUsage}% | Temp{" "}
-            {item.temperature}°C
-          </div>
-        ))}
-      </div>
-
     </div>
   );
 }
 
-/* BAR COMPONENT */
+/* BAR */
 function Bar({ label, value }) {
   const safeValue = Math.round(value || 0);
 

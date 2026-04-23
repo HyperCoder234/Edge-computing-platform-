@@ -2,14 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Base styling */
 body {
-  background: #0f0f0f;
-  color: #ffffff;
+  background: radial-gradient(circle at 20% 20%, #1a1a1a, #0f0f0f 60%);
+  color: white;
   font-family: system-ui, -apple-system, sans-serif;
 }
 
-/* Smooth UI */
-* {
-  transition: all 0.2s ease;
+/* 🔥 Glass Card */
+.glass {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+}
+
+/* 🔥 Glow effect */
+.glow {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+}
+
+/* 🔥 Subtle hover animation */
+.hover-card {
+  transition: all 0.25s ease;
+}
+
+.hover-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
 }
