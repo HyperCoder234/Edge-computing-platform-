@@ -39,7 +39,7 @@ export default function Home() {
   const latest = data[0] || {};
 
   return (
-    <div className="max-w-7xl mx-auto">
+    <div className="max-w-7xl mx-auto text-white">
 
       <Topbar />
 
@@ -70,10 +70,12 @@ export default function Home() {
       {/* Charts */}
       <div className="grid md:grid-cols-2 gap-4 mb-6">
         <div className="bg-white/5 border border-white/10 p-4 rounded-2xl">
+          <h2 className="text-white mb-2">Temperature Trend</h2>
           <Chart data={data} dataKey="temperature" color="#3b82f6" />
         </div>
 
         <div className="bg-white/5 border border-white/10 p-4 rounded-2xl">
+          <h2 className="text-white mb-2">CPU Usage Trend</h2>
           <Chart data={data} dataKey="cpuUsage" color="#22c55e" />
         </div>
       </div>
@@ -89,8 +91,8 @@ export default function Home() {
               {item.nodeId}
             </h2>
 
-            <p>🌡 {item.temperature}°C</p>
-            <p>🖥 {item.cpuUsage}%</p>
+            <p className="text-white">🌡 {item.temperature}°C</p>
+            <p className="text-white">🖥 {item.cpuUsage}%</p>
 
             <p className="text-gray-500 text-sm mt-2">
               {new Date(item.createdAt).toLocaleTimeString()}

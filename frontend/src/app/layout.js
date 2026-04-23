@@ -8,8 +8,8 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
-        <div className="flex min-h-screen bg-[#0b0f1a] text-white">
+      <body className="bg-[#0b0f1a] text-white">
+        <div className="flex min-h-screen">
 
           {/* Sidebar */}
           <aside className="w-64 bg-white/5 border-r border-white/10 p-6 hidden md:block">
