@@ -2,31 +2,61 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Base */
 body {
-  background: radial-gradient(circle at 20% 20%, #1a1a1a, #0f0f0f 60%);
+  background: black;
   color: white;
   font-family: system-ui, -apple-system, sans-serif;
 }
 
-/* 🔥 Glass Card */
-.glass {
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 14px;
+/* Sidebar nav */
+.nav-item {
+  padding: 10px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
-/* 🔥 Glow effect */
-.glow {
-  box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+.nav-item:hover {
+  background: rgba(255,255,255,0.05);
+  color: white;
 }
 
-/* 🔥 Subtle hover animation */
-.hover-card {
-  transition: all 0.25s ease;
+.nav-item.active {
+  background: white;
+  color: black;
 }
 
-.hover-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+/* Cards */
+.card {
+  background: #111;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 18px;
+}
+
+/* Buttons */
+.btn {
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: white;
+  color: black;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.btn:hover {
+  background: #ddd;
+}
+
+/* Outline button */
+.btn-outline {
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: white;
+}
+
+.btn-outline:hover {
+  background: rgba(255,255,255,0.05);
 }
