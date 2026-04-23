@@ -1,31 +1,28 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "Edge Monitor",
-  description: "Real-time Edge Dashboard",
+  title: "EdgeNet",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="bg-[#0b0f1a] text-white">
-        <div className="flex min-h-screen">
+      <body className="bg-[#0f0f0f] text-white">
+        <div className="min-h-screen">
 
-          {/* Sidebar */}
-          <aside className="w-64 bg-white/5 border-r border-white/10 p-6 hidden md:block">
-            <h1 className="text-xl font-bold text-cyan-400 mb-6">
-              ⚡ Edge Monitor
-            </h1>
+          {/* Top Navbar */}
+          <div className="flex justify-between items-center px-8 py-4 border-b border-white/10 bg-[#111]">
+            <h1 className="text-xl font-bold text-orange-400">⚡ EdgeNet</h1>
 
-            <nav className="space-y-4 text-gray-300">
-              <div className="hover:text-white cursor-pointer">Dashboard</div>
-              <div className="hover:text-white cursor-pointer">Nodes</div>
-              <div className="hover:text-white cursor-pointer">Control</div>
-            </nav>
-          </aside>
+            <div className="flex gap-6 text-gray-300">
+              <span className="hover:text-white cursor-pointer">Dashboard</span>
+              <span className="hover:text-white cursor-pointer">Nodes</span>
+              <span className="hover:text-white cursor-pointer">Analytics</span>
+              <span className="hover:text-white cursor-pointer">Settings</span>
+            </div>
+          </div>
 
-          {/* Main Content */}
-          <main className="flex-1 p-6">{children}</main>
+          <main className="p-6">{children}</main>
         </div>
       </body>
     </html>
