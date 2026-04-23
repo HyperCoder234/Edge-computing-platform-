@@ -53,7 +53,7 @@ export default function Home() {
       <div className="flex justify-evenly gap-2">
 
         <div className="card">
-          <p className="text-muted text-sm">Active Nodes</p>
+          <p className="text-muted w-20 text-sm">Active Nodes</p>
           <h2 className="text-strong text-2xl font-bold mt-2">
             {activeNodes}
           </h2>
