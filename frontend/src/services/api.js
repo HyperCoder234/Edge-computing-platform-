@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:5000/api";
+const BASE_URL = "https://edge-computing-platform.onrender.com/api";
 
 export const fetchData = async () => {
   try {

@@ -11,12 +11,20 @@ export default function Home() {
   useEffect(() => {
     const interval = setInterval(async () => {
       const res = await fetchData();
-      setData(res.slice(0, 20));
+
+      // ✅ sort latest → first
+      const sorted = res.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
+
+      // ✅ keep only latest 20
+      setData(sorted.slice(0, 20));
     }, 3000);
 
     return () => clearInterval(interval);
   }, []);
 
+  // ✅ now correct latest item
   const latest = data[0] || {};
 
   return (
