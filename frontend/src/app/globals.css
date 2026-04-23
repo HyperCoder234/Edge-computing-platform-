@@ -4,6 +4,8 @@
 
 /* Base */
 body {
+  background: #0b0b0b;
+  color: #e5e7eb; /* softer white */
   font-family: system-ui, -apple-system, sans-serif;
 }
 
@@ -12,77 +14,66 @@ body {
   padding: 10px 12px;
   border-radius: 8px;
   cursor: pointer;
-  transition: 0.25s;
+  transition: 0.2s;
 }
 
 .nav-item:hover {
-  background: rgba(255,255,255,0.06);
-  color: white;
+  background: rgba(255,255,255,0.05);
+  color: #ffffff;
 }
 
 .nav-item.active {
-  background: white;
-  color: black;
+  background: #ffffff;
+  color: #000000;
 }
 
-/* 🔥 CARD (NEW BALANCED DESIGN) */
+/* 🔥 CHARCOAL CARDS (FIXED) */
 .card {
-  background: linear-gradient(
-    145deg,
-    rgba(255,255,255,0.06),
-    rgba(255,255,255,0.02)
-  );
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 14px;
+  background: #1c1c1c; /* charcoal */
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
   padding: 18px;
-
-  backdrop-filter: blur(8px);
-
   transition: all 0.25s ease;
 }
 
-/* 🔥 HOVER (ELEVATION + GLOW) */
+/* 🔥 HOVER */
 .card:hover {
-  transform: translateY(-6px) scale(1.015);
+  transform: translateY(-5px);
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+}
 
-  background: linear-gradient(
-    145deg,
-    rgba(255,255,255,0.08),
-    rgba(255,255,255,0.03)
-  );
+/* TEXT FIXES */
+.text-muted {
+  color: #9ca3af;
+}
 
-  border: 1px solid rgba(255,255,255,0.25);
-
-  box-shadow:
-    0 15px 40px rgba(0,0,0,0.7),
-    0 0 25px rgba(255,255,255,0.06);
+.text-strong {
+  color: #ffffff;
 }
 
 /* Buttons */
 .btn {
   padding: 10px 16px;
   border-radius: 8px;
-  background: white;
-  color: black;
+  background: #ffffff;
+  color: #000000;
   font-weight: 500;
   transition: 0.2s;
 }
 
 .btn:hover {
-  background: #e5e5e5;
-  transform: scale(1.05);
+  background: #d4d4d4;
 }
 
-/* Outline button */
+/* Outline */
 .btn-outline {
   padding: 10px 16px;
   border-radius: 8px;
   border: 1px solid rgba(255,255,255,0.2);
-  color: white;
-  transition: 0.2s;
+  color: #e5e7eb;
 }
 
 .btn-outline:hover {
-  background: rgba(255,255,255,0.08);
-  transform: scale(1.05);
+  background: rgba(255,255,255,0.06);
 }

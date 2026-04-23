@@ -7,16 +7,18 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="bg-gradient-to-br from-black via-[#050505] to-[#111] text-white">
+      <body className="bg-[#0b0b0b] text-white">
         <div className="flex min-h-screen">
 
           {/* SIDEBAR */}
-          <aside className="w-64 bg-black/80 backdrop-blur border-r border-white/10 p-6 flex flex-col justify-between">
+          <aside className="w-64 bg-[#0a0a0a] border-r border-white/10 p-6 flex flex-col justify-between">
             
             <div>
-              <h1 className="text-xl font-bold mb-8">⚡ Edge</h1>
+              <h1 className="text-xl font-semibold mb-10 tracking-wide">
+                ⚡ Edge
+              </h1>
 
-              <nav className="space-y-4 text-gray-400">
+              <nav className="space-y-3 text-gray-400">
                 <div className="nav-item active">Dashboard</div>
                 <div className="nav-item">Nodes</div>
                 <div className="nav-item">Analytics</div>
@@ -25,7 +27,7 @@ export default function RootLayout({ children }) {
               </nav>
             </div>
 
-            <div className="text-sm text-gray-500">
+            <div className="text-xs text-gray-500">
               © Edge System
             </div>
 
@@ -33,7 +35,19 @@ export default function RootLayout({ children }) {
 
           {/* MAIN */}
           <main className="flex-1 p-8">
+            
+            {/* HEADER FIXED */}
+            <div className="mb-6">
+              <h1 className="text-2xl font-semibold text-white">
+                Edge Dashboard
+              </h1>
+              <p className="text-sm text-gray-400 mt-1">
+                Monitor and control your edge network
+              </p>
+            </div>
+
             {children}
+
           </main>
 
         </div>
