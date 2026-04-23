@@ -2,107 +2,81 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 🔥 BACKGROUND (MULTI-LAYER GRADIENT) */
-.app-bg {
-  background:
-    radial-gradient(circle at 20% 20%, rgba(0, 255, 255, 0.08), transparent),
-    radial-gradient(circle at 80% 30%, rgba(255, 0, 255, 0.06), transparent),
-    radial-gradient(circle at 50% 80%, rgba(0, 150, 255, 0.05), transparent),
-    #050505;
+/* Base */
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #0a0a0a;
+  color: #e5e7eb;
 }
 
-/* 🔥 SIDEBAR GLASS */
-.sidebar-glass {
-  background: rgba(10,10,10,0.7);
-  backdrop-filter: blur(12px);
-  border-right: 1px solid rgba(255,255,255,0.08);
-}
-
-/* 🔥 NAV */
-.nav-item {
-  padding: 10px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.25s;
-}
-
-.nav-item:hover {
-  background: rgba(255,255,255,0.06);
-  color: white;
-}
-
-.nav-item.active {
-  background: linear-gradient(90deg, #ffffff, #bbbbbb);
-  color: black;
-}
-
-/* 🔥 CARDS (PREMIUM GLASS) */
-.card {
-  background: rgba(255,255,255,0.04);
-  backdrop-filter: blur(10px);
-
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 14px;
-  padding: 18px;
-
-  transition: all 0.3s ease;
-}
-
-/* 🔥 HOVER (DEPTH + GLOW) */
-.card:hover {
-  transform: translateY(-6px) scale(1.02);
-
-  border: 1px solid rgba(255,255,255,0.2);
-
+/* PANEL */
+.panel {
+  background: linear-gradient(145deg, #111, #0a0a0a);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 14px;
   box-shadow:
-    0 20px 40px rgba(0,0,0,0.7),
-    0 0 25px rgba(0, 200, 255, 0.1),
-    0 0 15px rgba(255, 0, 255, 0.08);
+    inset 0 0 10px rgba(0,0,0,0.8),
+    0 0 8px rgba(0,0,0,0.6);
 }
 
-/* 🔥 TEXT */
-.text-muted {
-  color: #9ca3af;
+/* HEADER */
+.header {
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 10px;
 }
 
-.text-strong {
-  color: #ffffff;
+/* TEXT */
+.label {
+  font-size: 10px;
+  color: #888;
+  letter-spacing: 2px;
 }
 
-/* 🔥 GLOW TEXT */
-.glow-text {
-  background: linear-gradient(90deg, #ffffff, #a5f3fc);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.value {
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
 }
 
-/* 🔥 BUTTONS */
-.btn {
-  padding: 10px 16px;
-  border-radius: 8px;
+/* BLOCK */
+.block {
+  background: #151515;
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 8px;
+  border-radius: 6px;
+}
 
-  background: linear-gradient(135deg, #ffffff, #d4d4d4);
+/* BUTTONS */
+.btn-primary {
+  background: #22c55e;
   color: black;
-
-  font-weight: 500;
-  transition: 0.25s;
+  padding: 6px 12px;
+  font-size: 12px;
+  border-radius: 4px;
+  transition: 0.2s;
 }
 
-.btn:hover {
-  transform: scale(1.07);
-  box-shadow: 0 0 15px rgba(255,255,255,0.3);
+.btn-primary:hover {
+  background: #16a34a;
 }
 
-/* OUTLINE */
-.btn-outline {
-  padding: 10px 16px;
-  border-radius: 8px;
-
-  border: 1px solid rgba(255,255,255,0.2);
+.btn-secondary {
+  background: #333;
   color: white;
+  padding: 6px 12px;
+  font-size: 12px;
+  border-radius: 4px;
 }
 
-.btn-outline:hover {
-  background: rgba(255,255,255,0.08);
-  box-shadow: 0 0 15px rgba(0,200,255,0.15);
+.btn-secondary:hover {
+  background: #444;
+}
+
+/* SCROLL */
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-thumb {
+  background: #333;
 }
