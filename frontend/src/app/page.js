@@ -36,7 +36,7 @@ export default function Home() {
       <div className="flex justify-between items-center gap-10">
         <div>
           <h2 className="text-strong text-xl font-semibold">
-            Overview
+            Overview 
           </h2>
           <p className="text-muted text-sm">
             Live system intelligence
@@ -50,7 +50,7 @@ export default function Home() {
       </div>
 
       {/* STATS */}
-      <div className="flex justify-between gap-5">
+      <div className="flex justify-evenly gap-2">
 
         <div className="card">
           <p className="text-muted text-sm">Active Nodes</p>
