@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { fetchData } from "../services/api";
+import Chart from "../components/Chart";
 
 export default function Home() {
   const [data, setData] = useState([]);
@@ -26,113 +27,93 @@ export default function Home() {
   }, []);
 
   const latest = data[0] || {};
+  const activeNodes = new Set(data.map((d) => d.nodeId)).size;
 
   return (
-    <div className="p-6">
+    <div className="space-y-6">
 
       {/* HEADER */}
-      <div className="header flex justify-between items-center mb-6">
-        <h1 className="text-sm tracking-widest text-gray-400 uppercase">
-          Edge Control Panel
-        </h1>
-        <span className="text-green-400 text-xs">● LIVE</span>
-      </div>
-
-      {/* GRID */}
-      <div className="grid grid-cols-3 gap-4">
-
-        {/* LEFT */}
-        <div className="space-y-4">
-          <Dial title="CPU" value={latest.cpuUsage || 0} unit="%" />
-          <Dial title="TEMP" value={latest.temperature || 0} unit="°C" />
+      <div className="flex justify-between items-center">
+        <div>
+          <h2 className="text-strong text-xl font-semibold">
+            Overview
+          </h2>
+          <p className="text-muted text-sm">
+            Real-time metrics
+          </p>
         </div>
 
-        {/* CENTER */}
-        <div className="panel">
-
-          <p className="label">SYSTEM</p>
-
-          <div className="grid grid-cols-2 gap-3 mt-3 text-xs">
-            <Block label="NODE" value={latest.nodeId || "--"} />
-            <Block label="CPU" value={`${latest.cpuUsage || 0}%`} />
-            <Block label="TEMP" value={`${latest.temperature || 0}°C`} />
-            <Block label="STATUS" value="RUNNING" />
-          </div>
-
-          <div className="flex gap-2 mt-5">
-            <button className="btn-primary">START</button>
-            <button className="btn-secondary">STOP</button>
-          </div>
-
+        <div className="flex gap-2">
+          <button className="btn">Deploy</button>
+          <button className="btn-outline">Logs</button>
         </div>
-
-        {/* RIGHT */}
-        <div className="panel">
-
-          <p className="label">LOGS</p>
-
-          <div className="text-xs text-green-400 mt-3 space-y-1 max-h-64 overflow-y-auto font-mono">
-            {data.slice(0, 10).map((item) => (
-              <div key={item._id}>
-                [{new Date(item.createdAt).toLocaleTimeString()}] → CPU{" "}
-                {item.cpuUsage}%
-              </div>
-            ))}
-          </div>
-
-        </div>
-
       </div>
 
-    </div>
-  );
-}
+      {/* STATS */}
+      <div className="grid md:grid-cols-3 gap-4">
+        <div className="card">
+          <p className="text-muted">Active Nodes</p>
+          <h2 className="text-strong text-2xl font-bold">
+            {activeNodes}
+          </h2>
+        </div>
 
-/* 🔥 DIAL COMPONENT */
-function Dial({ title, value, unit }) {
-  const angle = (value / 100) * 180;
+        <div className="card">
+          <p className="text-muted">CPU Usage</p>
+          <h2 className="text-strong text-2xl font-bold">
+            {latest.cpuUsage || 0}%
+          </h2>
+        </div>
 
-  return (
-    <div className="panel text-center">
-
-      <p className="label mb-2">{title}</p>
-
-      <div className="relative w-40 h-20 mx-auto">
-
-        {/* base arc */}
-        <div className="absolute w-full h-full border-t-4 border-gray-700 rounded-t-full"></div>
-
-        {/* active arc */}
-        <div
-          className="absolute w-full h-full border-t-4 border-green-400 rounded-t-full"
-          style={{
-            clipPath: `inset(0 ${100 - value}% 0 0)`,
-          }}
-        ></div>
-
-        {/* needle */}
-        <div
-          className="absolute bottom-0 left-1/2 w-[2px] h-20 bg-red-500 origin-bottom"
-          style={{ transform: `rotate(${angle - 90}deg)` }}
-        ></div>
-
+        <div className="card">
+          <p className="text-muted">Temperature</p>
+          <h2 className="text-strong text-2xl font-bold">
+            {latest.temperature || 0}°C
+          </h2>
+        </div>
       </div>
 
-      <h2 className="value mt-2">
-        {value}
-        {unit}
-      </h2>
+      {/* GRAPHS */}
+      <div className="grid md:grid-cols-2 gap-4">
+        <div className="card">
+          <h3 className="text-strong mb-2">Temperature</h3>
+          <Chart data={data} dataKey="temperature" color="#38bdf8" />
+        </div>
 
-    </div>
-  );
-}
+        <div className="card">
+          <h3 className="text-strong mb-2">CPU</h3>
+          <Chart data={data} dataKey="cpuUsage" color="#22c55e" />
+        </div>
+      </div>
 
-/* BLOCK */
-function Block({ label, value }) {
-  return (
-    <div className="block">
-      <p className="text-gray-400 text-[10px]">{label}</p>
-      <p>{value}</p>
+      {/* NODE DATA */}
+      <div className="card">
+        <h3 className="text-strong mb-3">Node Data</h3>
+
+        <div className="grid md:grid-cols-3 gap-3">
+          {data.map((item) => (
+            <div
+              key={item._id}
+              className="bg-black/60 border border-white/20 p-3 rounded-lg"
+            >
+              <p className="text-muted text-xs">{item.nodeId}</p>
+
+              <p className="text-strong text-sm">
+                CPU: {item.cpuUsage}%
+              </p>
+
+              <p className="text-strong text-sm">
+                Temp: {item.temperature}°C
+              </p>
+
+              <p className="text-gray-400 text-xs">
+                {new Date(item.createdAt).toLocaleTimeString()}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+
     </div>
   );
 }
