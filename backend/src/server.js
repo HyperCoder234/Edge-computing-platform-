@@ -27,10 +27,8 @@ const server = http.createServer(app);
 // ===== CONNECT DATABASE FIRST =====
 connectDB();
 
-// ===== START MQTT ONLY IN LOCAL =====
-if (process.env.NODE_ENV !== "production") {
-  initMQTT();
-}
+// ===== START MQTT (CLOUD ENABLED) =====
+initMQTT();
 
 // ===== GLOBAL MIDDLEWARE =====
 app.use(helmet());
