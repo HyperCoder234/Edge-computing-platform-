@@ -7,14 +7,14 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="bg-[#0b0b0b] text-white">
+      <body className="app-bg text-white">
         <div className="flex min-h-screen">
 
           {/* SIDEBAR */}
-          <aside className="w-64 bg-[#0a0a0a] border-r border-white/10 p-6 flex flex-col justify-between">
+          <aside className="w-64 sidebar-glass p-6 flex flex-col justify-between">
             
             <div>
-              <h1 className="text-xl font-semibold mb-10 tracking-wide">
+              <h1 className="text-xl font-semibold mb-10 tracking-wide glow-text">
                 ⚡ Edge
               </h1>
 
@@ -36,13 +36,12 @@ export default function RootLayout({ children }) {
           {/* MAIN */}
           <main className="flex-1 p-8">
             
-            {/* HEADER FIXED */}
             <div className="mb-6">
-              <h1 className="text-2xl font-semibold text-white">
+              <h1 className="text-2xl font-semibold glow-text">
                 Edge Dashboard
               </h1>
               <p className="text-sm text-gray-400 mt-1">
-                Monitor and control your edge network
+                Real-time edge network intelligence
               </p>
             </div>
 
