@@ -11,15 +11,15 @@ export default function RootLayout({ children }) {
         <div className="flex min-h-screen">
 
           {/* SIDEBAR */}
-          <aside className="w-64 sidebar-glass p-6 flex flex-col justify-between">
+          <aside className="w-100 sidebar-glass p-6 flex flex-col justify-between">
             
             <div>
               <h1 className="text-xl font-semibold mb-10 tracking-wide glow-text">
                 ⚡ Edge
               </h1>
 
-              <nav className="space-y-3 text-gray-400">
-                <div className="nav-item active">Dashboard</div>
+              <nav className="space-y-3 text-red-400 text-bold">
+                <div className="nav-item active text-red-500">Dashboard</div>
                 <div className="nav-item">Nodes</div>
                 <div className="nav-item">Analytics</div>
                 <div className="nav-item">Control</div>
