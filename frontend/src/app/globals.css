@@ -4,8 +4,6 @@
 
 /* Base */
 body {
-  background: black;
-  color: white;
   font-family: system-ui, -apple-system, sans-serif;
 }
 
@@ -14,11 +12,11 @@ body {
   padding: 10px 12px;
   border-radius: 8px;
   cursor: pointer;
-  transition: 0.2s;
+  transition: 0.25s;
 }
 
 .nav-item:hover {
-  background: rgba(255,255,255,0.05);
+  background: rgba(255,255,255,0.06);
   color: white;
 }
 
@@ -27,12 +25,23 @@ body {
   color: black;
 }
 
-/* Cards */
+/* 🔥 CARDS (UPDATED) */
 .card {
-  background: #111;
+  background: rgba(255,255,255,0.03);
   border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 12px;
+  border-radius: 14px;
   padding: 18px;
+  transition: all 0.25s ease;
+  backdrop-filter: blur(6px);
+}
+
+/* 🔥 HOVER MAGIC */
+.card:hover {
+  transform: translateY(-6px) scale(1.01);
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 
+    0 10px 30px rgba(0,0,0,0.6),
+    0 0 20px rgba(255,255,255,0.05);
 }
 
 /* Buttons */
@@ -47,6 +56,7 @@ body {
 
 .btn:hover {
   background: #ddd;
+  transform: scale(1.05);
 }
 
 /* Outline button */
@@ -55,8 +65,10 @@ body {
   border-radius: 8px;
   border: 1px solid rgba(255,255,255,0.2);
   color: white;
+  transition: 0.2s;
 }
 
 .btn-outline:hover {
-  background: rgba(255,255,255,0.05);
+  background: rgba(255,255,255,0.08);
+  transform: scale(1.05);
 }

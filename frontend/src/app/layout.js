@@ -7,11 +7,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="bg-black text-white">
+      <body className="bg-gradient-to-br from-black via-[#050505] to-[#111] text-white">
         <div className="flex min-h-screen">
 
           {/* SIDEBAR */}
-          <aside className="w-64 bg-[#0a0a0a] border-r border-white/10 p-6 flex flex-col justify-between">
+          <aside className="w-64 bg-black/80 backdrop-blur border-r border-white/10 p-6 flex flex-col justify-between">
             
             <div>
               <h1 className="text-xl font-bold mb-8">⚡ Edge</h1>
@@ -32,7 +32,7 @@ export default function RootLayout({ children }) {
           </aside>
 
           {/* MAIN */}
-          <main className="flex-1 p-8 bg-[#050505]">
+          <main className="flex-1 p-8">
             {children}
           </main>
 
