@@ -1,66 +1,95 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-/* 🔥 STRONG VISIBLE GRADIENT */
-.app-bg {
-  background:
-    radial-gradient(circle at 15% 20%, rgba(0, 180, 255, 0.25), transparent 40%),
-    radial-gradient(circle at 85% 30%, rgba(255, 255, 255, 0.12), transparent 40%),
-    radial-gradient(circle at 50% 90%, rgba(0, 100, 255, 0.15), transparent 40%),
-    #050505;
+:root {
+  --bg-dark: #0a0a0a;
+  --bg-card: #111111;
+  --border: rgba(255, 255, 255, 0.08);
+
+  --text-primary: #ffffff;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+
+  --accent: #ffffff;
 }
 
-/* 🔥 ACTUAL GLOSSY CARD */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: radial-gradient(circle at top, #1a1a1a, #050505);
+  color: var(--text-primary);
+}
+
+/* 🔥 CARDS */
 .card {
   background: linear-gradient(
     145deg,
-    rgba(255,255,255,0.12),
-    rgba(255,255,255,0.04)
+    rgba(255,255,255,0.03),
+    rgba(255,255,255,0.01)
   );
-
-  backdrop-filter: blur(14px);
-
-  border: 1px solid rgba(255,255,255,0.2);
+  border: 1px solid var(--border);
   border-radius: 16px;
-  padding: 18px;
-
-  box-shadow:
-    0 15px 35px rgba(0,0,0,0.8),
-    inset 0 1px 1px rgba(255,255,255,0.08);
+  padding: 16px;
+  backdrop-filter: blur(10px);
 
   transition: all 0.3s ease;
 }
 
-/* 🔥 HOVER = DEPTH */
 .card:hover {
-  transform: translateY(-6px) scale(1.02);
-  border: 1px solid rgba(255,255,255,0.35);
-  box-shadow:
-    0 20px 50px rgba(0,0,0,0.9),
-    0 0 25px rgba(0, 200, 255, 0.2);
+  transform: translateY(-3px);
+  border-color: rgba(255,255,255,0.15);
 }
 
-/* 🔥 TEXT (VISIBLE ALWAYS) */
-.text-muted {
-  color: #d1d5db;
-}
-
+/* TEXT */
 .text-strong {
-  color: #ffffff;
+  color: var(--text-primary);
 }
 
-/* 🔥 BUTTONS */
+.text-muted {
+  color: var(--text-secondary);
+}
+
+/* BUTTONS */
 .btn {
-  background: linear-gradient(135deg, #ffffff, #cfcfcf);
+  background: white;
   color: black;
-  padding: 8px 16px;
-  border-radius: 10px;
+  padding: 8px 14px;
+  border-radius: 8px;
   font-weight: 500;
+  transition: 0.2s;
+}
+
+.btn:hover {
+  background: #e4e4e7;
 }
 
 .btn-outline {
-  border: 1px solid rgba(255,255,255,0.25);
-  padding: 8px 16px;
-  border-radius: 10px;
+  border: 1px solid var(--border);
+  padding: 8px 14px;
+  border-radius: 8px;
+  color: var(--text-primary);
+}
+
+.btn-outline:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+/* NAV */
+.nav-item {
+  padding: 8px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.nav-item:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+.nav-item.active {
+  background: rgba(255,255,255,0.08);
+  color: white;
 }
