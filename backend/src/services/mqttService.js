@@ -3,37 +3,34 @@ const Data = require("../models/Data");
 
 const initMQTT = () => {
   client.on("connect", () => {
-    console.log("📡 MQTT Connected");
+    console.log("📡 MQTT Connected (Cloud)");
 
-    client.subscribe("edge/data");
-    client.subscribe("edge/response");
+    // 🔥 QoS 1 for reliability
+    client.subscribe("edge/data", { qos: 1 });
+    client.subscribe("edge/response", { qos: 1 });
   });
 
   client.on("message", async (topic, message) => {
     try {
-      const data = JSON.parse(message.toString());
+      const raw = message.toString();
+      console.log("📥 GOT MESSAGE:", topic, raw);
 
-      // 🔥 DEBUG (IMPORTANT)
-      console.log("📥 RAW:", data);
+      const data = JSON.parse(raw);
 
       if (topic === "edge/data") {
-        // ❌ reject bad data
         if (!data.nodeId) {
           console.log("❌ Missing nodeId, skipping:", data);
           return;
         }
 
-        // ✅ FORCE CLEAN OBJECT
         const cleanData = {
           nodeId: String(data.nodeId),
           cpuUsage: Number(data.cpuUsage) || 0,
           temperature: Number(data.temperature) || 0,
-          memory: data.memory || "--",
-          uptime: data.uptime || "--",
           createdAt: new Date(),
         };
 
-        console.log("✅ Saving:", cleanData);
+        console.log("💾 Saving:", cleanData);
 
         await Data.create(cleanData);
       }
@@ -41,9 +38,8 @@ const initMQTT = () => {
       if (topic === "edge/response") {
         console.log("📨 Node Response:", data);
       }
-
     } catch (error) {
-      console.error("MQTT error:", error.message);
+      console.error("❌ MQTT error:", error.message);
     }
   });
 };
