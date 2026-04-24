@@ -23,9 +23,22 @@ export default function Home() {
             )
           : [];
 
+        // 🔥 FIX: balance data per node
+        const grouped = sorted.reduce((acc, item) => {
+          if (!item?.nodeId) return acc;
+
+          if (!acc[item.nodeId]) acc[item.nodeId] = [];
+          acc[item.nodeId].push(item);
+
+          return acc;
+        }, {});
+
+        const balancedData = Object.values(grouped).flatMap(
+          (nodeData) => nodeData.slice(0, 10)
+        );
+
         if (isMounted) {
-          // 🔥 increase data for better graphs
-          setData(sorted.slice(0, 50));
+          setData(balancedData);
         }
       } catch (err) {
         console.error(err);
@@ -45,7 +58,7 @@ export default function Home() {
   const latest = data[0] || {};
   const activeNodes = new Set(data.map((d) => d?.nodeId)).size;
 
-  // 🔥 GROUP DATA BY NODE
+  // 🔥 group again for charts
   const groupedData = data.reduce((acc, item) => {
     if (!item?.nodeId) return acc;
 
@@ -99,7 +112,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* GLOBAL GRAPHS (UNCHANGED) */}
+      {/* GLOBAL GRAPHS */}
       <div className="grid md:grid-cols-2 gap-4">
         <div className="card">
           <h3 className="text-strong mb-2">Temperature</h3>
