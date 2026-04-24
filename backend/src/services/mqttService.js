@@ -5,10 +5,7 @@ const initMQTT = () => {
   client.on("connect", () => {
     console.log("📡 MQTT Connected");
 
-    // existing
     client.subscribe("edge/data");
-    
-    // 🔥 NEW
     client.subscribe("edge/response");
   });
 
@@ -16,13 +13,31 @@ const initMQTT = () => {
     try {
       const data = JSON.parse(message.toString());
 
-      // 📊 Data storage (existing)
+      // 🔥 DEBUG (IMPORTANT)
+      console.log("📥 RAW:", data);
+
       if (topic === "edge/data") {
-        console.log("📥 Data received:", data);
-        await Data.create(data);
+        // ❌ reject bad data
+        if (!data.nodeId) {
+          console.log("❌ Missing nodeId, skipping:", data);
+          return;
+        }
+
+        // ✅ FORCE CLEAN OBJECT
+        const cleanData = {
+          nodeId: String(data.nodeId),
+          cpuUsage: Number(data.cpuUsage) || 0,
+          temperature: Number(data.temperature) || 0,
+          memory: data.memory || "--",
+          uptime: data.uptime || "--",
+          createdAt: new Date(),
+        };
+
+        console.log("✅ Saving:", cleanData);
+
+        await Data.create(cleanData);
       }
 
-      // 🎯 NEW: response handling
       if (topic === "edge/response") {
         console.log("📨 Node Response:", data);
       }
