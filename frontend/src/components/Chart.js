@@ -11,43 +11,45 @@ import {
 } from "recharts";
 
 export default function Chart({ data = [], dataKey, color = "#22c55e" }) {
-
-  // 🔥 FIX 1: map data to REAL CURRENT TIME
+  // 🔥 FIX 1: Ensure correct order (old → new)
   const formattedData = [...data]
-    .slice(-20) // last 20 points
-    .map((item) => ({
-      ...item,
-      // 👇 force realtime based on arrival
-      localTime: Date.now(),
-    }));
+    .filter((d) => d?.createdAt)
+    .sort(
+      (a, b) =>
+        new Date(a.createdAt) - new Date(b.createdAt)
+    );
 
   return (
     <ResponsiveContainer width="100%" height={220}>
       <LineChart data={formattedData}>
 
+        {/* GRID */}
         <CartesianGrid
           stroke="rgba(255,255,255,0.05)"
           strokeDasharray="3 3"
         />
 
-        {/* 🔥 REALTIME X-AXIS */}
+        {/* 🔥 FIX 2: TIME ZONE CORRECT */}
         <XAxis
-          dataKey="localTime"
-          stroke="#aaa"
+          dataKey="createdAt"
+          stroke="#71717a"
           fontSize={11}
           tickFormatter={(time) =>
             new Date(time).toLocaleTimeString("en-IN", {
-              hour: "2-digit",
               minute: "2-digit",
               second: "2-digit",
-              hour12: true, // 👈 12 HOUR FORMAT
+              hour12: false,
+              timeZone: "Asia/Kolkata",
             })
           }
         />
 
-        <YAxis stroke="#aaa" fontSize={11} />
+        <YAxis
+          stroke="#71717a"
+          fontSize={11}
+        />
 
-        {/* TOOLTIP */}
+        {/* 🔥 FIX 3: TOOLTIP TIME MATCH */}
         <Tooltip
           contentStyle={{
             background: "#111",
@@ -60,11 +62,13 @@ export default function Chart({ data = [], dataKey, color = "#22c55e" }) {
               hour: "2-digit",
               minute: "2-digit",
               second: "2-digit",
-              hour12: true, // 👈 12H FORMAT
+              hour12: false,
+              timeZone: "Asia/Kolkata",
             })
           }
         />
 
+        {/* LINE */}
         <Line
           type="monotone"
           dataKey={dataKey}
