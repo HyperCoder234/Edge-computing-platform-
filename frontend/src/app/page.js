@@ -16,14 +16,14 @@ export default function Home() {
       const sorted = Array.isArray(res)
         ? res.sort(
             (a, b) =>
-              new Date(b?.createdAt || 0) -
-              new Date(a?.createdAt || 0)
+              new Date(a?.createdAt || 0) -
+              new Date(b?.createdAt || 0)
           )
         : [];
 
       setData(sorted);
 
-      timeout = setTimeout(loop, 2000);
+      timeout = setTimeout(loop, 1000); // 🔥 faster sync
     };
 
     loop();
@@ -39,7 +39,12 @@ export default function Home() {
   }, {});
 
   const nodeIds = Object.keys(groupedData);
-  const latest = data[0] || {};
+
+  // 🔥 FIX: latest = LAST element
+  const latest = data[data.length - 1] || {};
+
+  // 🔥 FIX: global charts use latest slice
+  const globalChartData = data.slice(-20);
 
   return (
     <div className="flex min-h-screen">
@@ -86,11 +91,11 @@ export default function Home() {
         {/* GLOBAL GRAPHS */}
         <div className="grid grid-cols-2 gap-4">
           <Card title="Global CPU Trend">
-            <Chart data={data} dataKey="cpuUsage" color="#22c55e" />
+            <Chart data={globalChartData} dataKey="cpuUsage" color="#22c55e" />
           </Card>
 
           <Card title="Global Temperature Trend">
-            <Chart data={data} dataKey="temperature" color="#38bdf8" />
+            <Chart data={globalChartData} dataKey="temperature" color="#38bdf8" />
           </Card>
         </div>
 
@@ -102,7 +107,12 @@ export default function Home() {
 
             {nodeIds.map((nodeId) => {
               const nodeData = groupedData[nodeId];
-              const latest = nodeData[0];
+
+              // 🔥 FIX: correct latest
+              const latest = nodeData[nodeData.length - 1];
+
+              // 🔥 FIX: proper chart data
+              const chartData = nodeData.slice(-20);
 
               return (
                 <div key={nodeId} className="card space-y-4">
@@ -129,7 +139,12 @@ export default function Home() {
                       <p className="text-gray-400">Updated</p>
                       <p>
                         {latest?.createdAt
-                          ? new Date(latest.createdAt).toLocaleTimeString()
+                          ? new Date(latest.createdAt).toLocaleTimeString("en-IN", {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                              second: "2-digit",
+                              hour12: true,
+                            })
                           : "--"}
                       </p>
                     </div>
@@ -139,13 +154,13 @@ export default function Home() {
                   <div className="grid grid-cols-2 gap-3">
 
                     <Chart
-                      data={[...nodeData].reverse().slice(0, 20)}
+                      data={chartData}
                       dataKey="cpuUsage"
                       color="#22c55e"
                     />
 
                     <Chart
-                      data={[...nodeData].reverse().slice(0, 20)}
+                      data={chartData}
                       dataKey="temperature"
                       color="#38bdf8"
                     />
@@ -174,13 +189,18 @@ export default function Home() {
               </thead>
 
               <tbody>
-                {data.slice(0, 20).map((item, i) => (
+                {data.slice(-20).map((item, i) => (
                   <tr key={i} className="border-b border-white/5">
                     <td className="p-2">{item.nodeId}</td>
                     <td className="p-2">{item.cpuUsage}%</td>
                     <td className="p-2">{item.temperature}°C</td>
                     <td className="p-2">
-                      {new Date(item.createdAt).toLocaleTimeString()}
+                      {new Date(item.createdAt).toLocaleTimeString("en-IN", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        second: "2-digit",
+                        hour12: true,
+                      })}
                     </td>
                   </tr>
                 ))}
