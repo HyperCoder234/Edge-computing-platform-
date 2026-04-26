@@ -11,7 +11,7 @@ import {
 } from "recharts";
 
 export default function Chart({ data = [], dataKey, color = "#22c55e" }) {
-  // 🔥 SORT DATA (oldest → newest for correct time flow)
+  // 🔥 FIX 1: Ensure correct order (old → new)
   const formattedData = [...data]
     .filter((d) => d?.createdAt)
     .sort(
@@ -29,17 +29,19 @@ export default function Chart({ data = [], dataKey, color = "#22c55e" }) {
           strokeDasharray="3 3"
         />
 
-        {/* 🔥 TIME AXIS FIX */}
+        {/* 🔥 FIX 2: TIME ZONE CORRECT */}
         <XAxis
           dataKey="createdAt"
-          tickFormatter={(time) =>
-            new Date(time).toLocaleTimeString([], {
-              minute: "2-digit",
-              second: "2-digit",
-            })
-          }
           stroke="#71717a"
           fontSize={11}
+          tickFormatter={(time) =>
+            new Date(time).toLocaleTimeString("en-IN", {
+              minute: "2-digit",
+              second: "2-digit",
+              hour12: false,
+              timeZone: "Asia/Kolkata",
+            })
+          }
         />
 
         <YAxis
@@ -47,7 +49,7 @@ export default function Chart({ data = [], dataKey, color = "#22c55e" }) {
           fontSize={11}
         />
 
-        {/* TOOLTIP */}
+        {/* 🔥 FIX 3: TOOLTIP TIME MATCH */}
         <Tooltip
           contentStyle={{
             background: "#111",
@@ -56,7 +58,13 @@ export default function Chart({ data = [], dataKey, color = "#22c55e" }) {
             color: "#fff",
           }}
           labelFormatter={(time) =>
-            new Date(time).toLocaleTimeString()
+            new Date(time).toLocaleTimeString("en-IN", {
+              hour: "2-digit",
+              minute: "2-digit",
+              second: "2-digit",
+              hour12: false,
+              timeZone: "Asia/Kolkata",
+            })
           }
         />
 
